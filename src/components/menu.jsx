@@ -38,11 +38,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
 
 
 h1 {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 400;
     color: white;
 }
@@ -58,10 +58,12 @@ justify-content: center;
 
 const Filme = styled.div `
 
+margin: 30px;
+
 img{
 height: 210px;
 width: 145px;
-padding: 30px;
+
 border-radius: 15px;
 }
 
