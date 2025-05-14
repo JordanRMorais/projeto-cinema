@@ -29,9 +29,11 @@ const [filme,setFilme] = useState ([]);
         </Filmes>
     </Container>
 
-    )
-      
+    )   
 }
+
+
+
 
 const Container = styled.div`
   background-color: rgba(33, 34, 38, 1);
@@ -39,6 +41,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 800px;
+  padding: 30px;
 
 
 h1 {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -53,17 +59,18 @@ const Filmes = styled.div `
 display: flex;
 flex-wrap: wrap;
 justify-content: center;
+padding-top: 10px;
+
 
 `
 
 const Filme = styled.div `
 
-margin: 30px;
+margin: 10px;
 
 img{
 height: 210px;
 width: 145px;
-
 border-radius: 15px;
 }
 

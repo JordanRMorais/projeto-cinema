@@ -1,6 +1,7 @@
 import Topo from './components/topo.jsx'
 import styled from 'styled-components'
 import Menu from './components/menu.jsx'
+import Sessoes from './components/sessoes.jsx';
 
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
     <Container>
     <Topo/>
     <Menu/>
+    <Sessoes/>
     </Container>
   )
 }
@@ -16,7 +18,7 @@ export default function App() {
 const Container = styled.div`
   min-width: 375px;
   max-width: 500px;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
