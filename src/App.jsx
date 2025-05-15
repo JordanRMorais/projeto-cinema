@@ -2,6 +2,7 @@ import Topo from './components/topo.jsx'
 import styled from 'styled-components'
 import Menu from './components/menu.jsx'
 import Sessoes from './components/sessoes.jsx';
+import Assentos from './components/assentos.jsx';
 
 
 export default function App() {
@@ -9,8 +10,9 @@ export default function App() {
   return (
     <Container>
     <Topo/>
-    {/* <Menu/> */}
-    <Sessoes/>
+    {/* <Menu/>
+    <Sessoes/> */}
+    <Assentos/>
     </Container>
   )
 }

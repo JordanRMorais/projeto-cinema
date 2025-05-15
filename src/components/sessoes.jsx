@@ -40,7 +40,7 @@ const SessoesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
- overflow-y: scroll;
+  overflow-y: scroll;
   height: 100%;
   max-height: 800px;
   padding: 30px;
