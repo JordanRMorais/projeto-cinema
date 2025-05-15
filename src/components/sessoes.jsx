@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Sessoes() {
   const [dias, setDias] = useState([]);
+  const { idFilme } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
-      .get("https://mock-api.driven.com.br/api/v8/cineflex/movies/1/showtimes")
+      .get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
       .then((resposta) => {
         setDias(resposta.data.days);
       })  }, []);
@@ -24,7 +27,7 @@ export default function Sessoes() {
           <Linha />
           <Horarios>
             {dia.showtimes.map((sessao) => (
-              <p key={sessao.id}>{sessao.name}</p>
+              <HorarioBotao key={sessao.id} onClick={()=>navigate(`/assentos/${sessao.id}`)}>{sessao.name}</HorarioBotao>
             ))}
           </Horarios>
         </Sessao>
@@ -81,16 +84,18 @@ const Horarios = styled.div`
   display: flex;
   gap: 10px;
 
-  p {
+`;
+
+const HorarioBotao = styled.div `
     border: 2px solid rgba(238, 137, 127, 1);
     color: rgba(238, 137, 127, 1);
     padding: 10px 20px;
     border-radius: 4px;
     font-weight: bold;
     font-size: 16px;
-  }
+    cursor: pointer;
 
-`;
+`
 
 const Linha = styled.hr`
   width: 80%;

@@ -1,21 +1,71 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+
 
 export default function Assentos (){
 
+
     const [lugar, setLugar] = useState ([]);
+    const [sessao, setSessao] = useState({});
+    const { idSessao } = useParams();
+    const [selecionados, setSelecionados] = useState([]);
+    const [nome, setNome] = useState("");
+    const [cpf, setCpf] = useState("");
+    const navigate = useNavigate();
 
     
-useEffect(() => {
-  const requisicaoLugar = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/showtimes/1/seats");
+        useEffect(() => {
+          const requisicaoLugar = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
+          requisicaoLugar.then(resposta => {
+            setLugar(resposta.data.seats);
+            setSessao(resposta.data);
+        });}, []); 
+        
+      function toggleAssento(assento) {
+          if (!assento.isAvailable) {
+            alert("Esse assento não está disponível");
+            return;
+          }
 
-  requisicaoLugar.then(resposta => {
-    setLugar(resposta.data.seats);
-  });
-}, []);    
+          if (selecionados.includes(assento.id)) {
+            setSelecionados(selecionados.filter((id) => id !== assento.id));
+          } else {
+            setSelecionados([...selecionados, assento.id]);
+          }
+            }
 
 
+         function reservarAssentos() {
+
+          if (!nome || !cpf || selecionados.length === 0) {
+          alert("Preencha todos os campos e selecione um assento!");
+          return;
+          }
+           
+            const dadosPessoais = {
+              ids: selecionados,
+              name: nome,
+              cpf: cpf,
+            };
+
+             axios
+              .post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", dadosPessoais)
+              .then(() => {
+                const assentosSelecionados = lugar.filter(l => selecionados.includes(l.id));
+                navigate("/sucesso", {
+                  state: {
+                    nome,
+                    cpf,
+                    assentos: assentosSelecionados.map(lu => lu.name),
+                    filme: sessao.movie.title,
+                    horario: sessao.name,
+                    data: sessao.day.date
+                  }
+                });
+              });
+        }
 
     return (
      <ContainerAssentos>
@@ -23,7 +73,11 @@ useEffect(() => {
 
         <Lugares> 
         {lugar.map(as =>(
-             <Lugar key={as.id}>
+             <Lugar key={as.id}
+            
+            $disponivel={as.isAvailable}
+            $selecionado={selecionados.includes(as.id)}
+            onClick={() => toggleAssento(as)}>
 
             <p>{as.name}</p>
 
@@ -39,14 +93,21 @@ useEffect(() => {
         <Dados>
             
             <h1>Nome do comprador(a)</h1>
-            <input placeholder="Digite seu nome..."></input>
-            
-            
+            <input 
+            value={nome} 
+            onChange={(e) => setNome(e.target.value)} 
+            placeholder="Digite seu nome..." 
+            required/>
+                        
             <h1>CPF do comprador(a)</h1>
-            <input placeholder="Digite seu CPF..."></input>
+            <input 
+            value={cpf} 
+            onChange={(e) => setCpf(e.target.value)} 
+            placeholder="Digite seu CPF..." 
+            required/>
             
         </Dados>
-        <BotaoReserva>
+        <BotaoReserva type="button" onClick={reservarAssentos}>
 
             <button>
 
@@ -98,11 +159,17 @@ const Lugar = styled.div `
 height: 26px;
 width: 26px;
 border-radius: 12px;
-background-color: rgba(157, 184, 153, 1);
+background-color: ${(props) =>
+      !props.$disponivel
+      ? "#rgba(43, 45, 54, 1)"
+      : props.$selecionado
+      ? "rgba(238, 137, 127, 1)"
+      : "rgba(157, 184, 153, 1)"};
 display: flex;
 align-items: center;
 justify-content: center;
 margin: 3px;
+cursor: pointer;
 
 p{
     font-size: 11px;

@@ -4,18 +4,24 @@ import Menu from './components/menu.jsx'
 import Sessoes from './components/sessoes.jsx';
 import Assentos from './components/assentos.jsx';
 import Confirmacao from './components/confirmacao.jsx';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 export default function App() {
   
   return (
-    <Container>
-    <Topo/>
-    {/* <Menu/>
-    <Sessoes/> */}
-    {/* <Assentos/> */}
-    <Confirmacao/>
-    </Container>
+    <BrowserRouter>
+      <Container>
+        <Topo/>
+        <Routes>
+          <Route path="/" element={<Menu />} />
+          <Route path="/sessoes/:idFilme" element={<Sessoes />} />
+          <Route path="/assentos/:idSessao" element={<Assentos />} />
+          <Route path="/sucesso" element={<Confirmacao />} />
+        </Routes>    
+      </Container>
+    </BrowserRouter>
+
   )
 }
 

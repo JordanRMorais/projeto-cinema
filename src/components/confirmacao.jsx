@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 export default function Confirmacao (){
+
+      const { state } = useLocation();
+      const navigate = useNavigate();
+      const { nome, cpf, assentos, filme, horario, data } = state;
 
   return (
 
@@ -13,23 +17,25 @@ export default function Confirmacao (){
     <p>Filme e sessão</p>
     <Linha/>
     <p1>
-        texto
+        {filme}<br /><br />{data} às {horario}
     </p1>
     <p>Ingressos</p>
     <Linha/>
     <p1>
-        texto
+         {assentos.map((a, i) => (
+            <div key={i}>Assento {a}<br /><br /></div>
+          ))} 
     </p1>
 
     <p>Comprador(a)</p>
     <Linha/>
     <p1>
-        texto
+       Nome: {nome}<br /><br />CPF: {cpf} 
     </p1>
 
     </TelaFinal>
 
-    <BotaoVoltar>
+    <BotaoVoltar onClick={() => navigate("/")}>
         <button>
             <p>Voltar para tela inicial</p>
         </button>
@@ -63,7 +69,7 @@ h1 {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida 
 `;
 
 const TelaFinal = styled.div `
-height: 425px;
+height: 480px;
 width: 380px;
 background-color:rgba(43, 45, 54, 1);
 display: flex;

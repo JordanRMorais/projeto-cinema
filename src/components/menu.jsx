@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Menu (){
 
 const [filme,setFilme] = useState ([]);
+const navigate = useNavigate();
 
     useEffect(() => { 
         
@@ -19,8 +21,8 @@ const [filme,setFilme] = useState ([]);
         <Filmes> 
         
         {filme.map( img => (
-        <Filme>
-            <img src={img.posterURL}>
+        <Filme key={img.id}>
+            <img onClick={() => navigate(`/sessoes/${img.id}`) } src={img.posterURL}>
             </img>
 
         </Filme>
@@ -67,6 +69,7 @@ padding-top: 10px;
 const Filme = styled.div `
 
 margin: 10px;
+cursor: pointer;
 
 img{
 height: 210px;
