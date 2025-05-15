@@ -4,6 +4,11 @@ import { useState, useEffect } from 'react';
 
 export default function Sessoes (){
 
+    const [horario, setHorario] = useState([]);
+
+    const requisicaoHorario = axios.get("");
+
+
 return (
     <SessoesContainer>
     <h1>Selecione o horário</h1>
