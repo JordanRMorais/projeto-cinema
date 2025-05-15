@@ -3,17 +3,39 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Assentos (){
+
+    const [lugar, setLugar] = useState ([]);
+
+    
+useEffect(() => {
+  const requisicaoLugar = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/showtimes/1/seats");
+
+  requisicaoLugar.then(resposta => {
+    setLugar(resposta.data.seats);
+  });
+}, []);    
+
+
+
     return (
      <ContainerAssentos>
         <h1>Selecione o(s) assento(s)</h1>
+
         <Lugares> 
-        
-            <Lugar>
-            <p>01</p>
+        {lugar.map(as =>(
+             <Lugar key={as.id}>
+
+            <p>{as.name}</p>
+
             </Lugar>
+
+        ))}
+           
       
         </Lugares>
+
         <Linha/>
+
         <Dados>
             
             <h1>Nome do comprador(a)</h1>
@@ -25,10 +47,14 @@ export default function Assentos (){
             
         </Dados>
         <BotaoReserva>
+
             <button>
+
                 <p>Reservar assentos(s)</p>
             </button>
+
         </BotaoReserva>
+
     </ContainerAssentos>
     )
 }
@@ -58,8 +84,12 @@ h1 {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida 
 const Lugares = styled.div `
 height: 200px;
 width: 380px;
-background-color: red;
+/* background-color: red; */
 margin-top: 20px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
 
 
 `
@@ -72,6 +102,7 @@ background-color: rgba(157, 184, 153, 1);
 display: flex;
 align-items: center;
 justify-content: center;
+margin: 3px;
 
 p{
     font-size: 11px;
