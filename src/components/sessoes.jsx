@@ -2,38 +2,35 @@ import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from 'react';
 
-export default function Sessoes (){
+export default function Sessoes() {
+  const [dias, setDias] = useState([]);
 
-    const [horario, setHorario] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://mock-api.driven.com.br/api/v8/cineflex/movies/1/showtimes")
+      .then((resposta) => {
+        setDias(resposta.data.days);
+      })  }, []);
 
-    const requisicaoHorario = axios.get("");
-
-
-return (
+  return (
     <SessoesContainer>
-    <h1>Selecione o horário</h1>
-    
-    <Sessao>
+      <h1>Selecione o horário</h1>
 
-        <Data>
-            
-            <p>Quinta-feira, 21/03/2024</p>
-
-        </Data>
-        <Linha />
-        <Horarios>
-            <p>10:00</p>
-            
-        </Horarios>
-
-    </Sessao>
-    
-   
-  
+      {dias.map((dia) => (
+        <Sessao key={dia.id}>
+          <Data>
+            <p>{dia.weekday}, {dia.date}</p>
+          </Data>
+          <Linha />
+          <Horarios>
+            {dia.showtimes.map((sessao) => (
+              <p key={sessao.id}>{sessao.name}</p>
+            ))}
+          </Horarios>
+        </Sessao>
+      ))}
     </SessoesContainer>
-
-)
-
+  );
 }
 
 
@@ -43,7 +40,7 @@ const SessoesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
- /* overflow-y: scroll; */
+ overflow-y: scroll;
   height: 100%;
   max-height: 800px;
   padding: 30px;
@@ -58,14 +55,13 @@ h1 {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida 
 `
 const Sessao = styled.div`
   width: 340px;
-  height: 150px;
+  min-height: 150px;
   background-color: rgba(43, 45, 54, 1);
   display: flex;
   flex-direction: column;
-  align-items: first baseline;
-  justify-content: center;
   margin-top: 20px;
   padding-left: 20px;
+  justify-content: space-evenly;
   
 `;
 
@@ -100,5 +96,5 @@ const Linha = styled.hr`
   width: 80%;
   border: none;
   border-top: 1px solid rgba(78, 90, 101, 1);
-  margin: 20px 0;
+  margin: 0;
 `;
