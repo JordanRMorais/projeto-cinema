@@ -161,7 +161,7 @@ width: 26px;
 border-radius: 12px;
 background-color: ${(props) =>
       !props.$disponivel
-      ? "#rgba(43, 45, 54, 1)"
+      ? "rgba(43, 45, 54, 1)"
       : props.$selecionado
       ? "rgba(238, 137, 127, 1)"
       : "rgba(157, 184, 153, 1)"};

@@ -16,22 +16,22 @@ export default function Confirmacao (){
     <TelaFinal>
     <p>Filme e sessão</p>
     <Linha/>
-    <p1>
+    <span>
         {filme}<br /><br />{data} às {horario}
-    </p1>
+    </span>
     <p>Ingressos</p>
     <Linha/>
-    <p1>
+    <span>
          {assentos.map((a, i) => (
             <div key={i}>Assento {a}<br /><br /></div>
           ))} 
-    </p1>
+    </span>
 
     <p>Comprador(a)</p>
     <Linha/>
-    <p1>
+    <span>
        Nome: {nome}<br /><br />CPF: {cpf} 
-    </p1>
+    </span>
 
     </TelaFinal>
 
@@ -75,6 +75,7 @@ background-color:rgba(43, 45, 54, 1);
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
+border-radius: 8px;
 
 
 
@@ -87,7 +88,7 @@ p{
     
 };
 
-p1{ font-size:20px;
+span{ font-size:20px;
     font-weight: 400;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color:white;
